@@ -79,8 +79,8 @@ echo "export LD_LIBRARY_PATH=$ACTUAL_INSTALL_PATH/lib:\$LD_LIBRARY_PATH" >> $PRO
 echo "export MAGICK_CONFIGURE_PATH=$ACTUAL_INSTALL_PATH" >> $PROFILE_PATH
 
 
-POLICY_PATH="$HOME/vendor/imagemagick/etc/ImageMagick-7/"
-mkdir -p $(dirname $POLICY_PATH)
+POLICY_PATH="$HOME/vendor/imagemagick/etc/ImageMagick-7"
+mkdir -p $POLICY_PATH
 cat >$POLICY_PATH/policy.xml <<EOF
 <policymap>
   <policy domain="coder" rights="none" pattern="EPHEMERAL" />
