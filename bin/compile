@@ -13,7 +13,7 @@ mkdir -p $VENDOR_DIR
 INSTALL_DIR="$VENDOR_DIR/imagemagick"
 mkdir -p $INSTALL_DIR
 IMAGE_MAGICK_VERSION="${IMAGE_MAGICK_VERSION:-7.0.5-10}"
-CACHE_FILE="$CACHE_DIR/jp-001-imagemagick-$IMAGE_MAGICK_VERSION.tar.gz"
+CACHE_FILE="$CACHE_DIR/jp-002-imagemagick-$IMAGE_MAGICK_VERSION.tar.gz"
 
 if [ ! -f $CACHE_FILE ]; then
   # install imagemagick
@@ -55,6 +55,8 @@ else
   tar xzf $CACHE_FILE -C $VENDOR_DIR
 fi
 
+ACTUAL_INSTALL_PATH="$HOME/vendor/imagemagick/etc/ImageMagick-7/"
+
 echo "-----> Writing policy file"
 mkdir -p $INSTALL_DIR/etc/ImageMagick
 cat > $INSTALL_DIR/policy.xml <<EOF
@@ -65,6 +67,16 @@ cat > $INSTALL_DIR/policy.xml <<EOF
   <policy domain="coder" rights="none" pattern="MSL" />
 </policymap>
 EOF
+
+cat > $ACTUAL_INSTALL_PATH/policy.xml <<EOF
+<policymap>
+  <policy domain="coder" rights="none" pattern="EPHEMERAL" />
+  <policy domain="coder" rights="read" pattern="HTTPS" />
+  <policy domain="coder" rights="none" pattern="MVG" />
+  <policy domain="coder" rights="none" pattern="MSL" />
+</policymap>
+EOF
+
 
 # update PATH and LD_LIBRARY_PATH
 echo "-----> Updating environment variables"
